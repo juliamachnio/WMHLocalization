@@ -6,4 +6,8 @@ White Matter Lesions are commonly observed as hyperintensities on FLAIR MRIs or 
 
 ## Method 
 
-![alt text](corrected-compressed.pdf)
+![pipeline](https://github.com/juliamachnio/WMHLocalization/blob/main/img.jpg)
+
+czym są labelled , link do orginalnego atlasu, link to txt z labelami refined, jak wydobyć WM, link do yucca, przykładowe komendy do yucca, tabela z wynikami, cytowanie, rehectracja atlasu do subjectu za pomocą skryptu w matlabie 
+
+
