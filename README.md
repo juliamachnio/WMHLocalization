@@ -1,5 +1,5 @@
 # Deep Learning for Localization of White Matter (WM) Lesions in Neurological Diseases
-This is the official repository of *Deep Learning for Localization of White Matter Lesions in Neurological Diseases* (https://openreview.net/pdf?id=ea0YJaJShO) presented at the Northern Lights Deep Learning Conference 2025.
+This is the official repository of *Deep Learning for Localization of White Matter Lesions in Neurological Diseases* presented at the Northern Lights Deep Learning Conference 2025 (https://openreview.net/pdf?id=ea0YJaJShO).
 
 ## Description
 White Matter Lesions are commonly observed as hyperintensities on FLAIR MRIs or hypointensities on T1-weighted images and associated with neurological diseases. The spatial distribution of these lesions is linked to an increased risk of developing neurological conditions, emphasizing the need for location-based analyses. This study proposes deep learning-based methods for automated WM lesions segmentation and localization.
@@ -34,9 +34,14 @@ We trained four deep learning architectures: U-Net, UNETR, MultiResUNet and MedN
 
 Each DL architecture was trained using [Yucca](https://github.com/Sllambias/yucca/tree/main). 
 
-
-
-
+WM Lesions segmentation
+```bash
+yucca_preprocess -t Task001_WM_Lesion
+```
+WM Regions segmentation
+```bash
+yucca_preprocess -t Task3002_WM_Location
+```
 
 ## Citation
 ```bibtex
