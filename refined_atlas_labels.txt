@@ -1,4 +1,4 @@
-# JHU_MNI_SS_WMPM_Type-II_LUT.csv
+# Refined JHU_MNI_SS_WMPM_Type-II_LUT.csv
 0 Background
 1 SUPERIOR_PARIETAL_LOBULE_left/ANGULAR_GYRUS_left/SUPRAMARGINAL_GYRUS
 2 CINGULATE_GYRUS_left/Cingulum_(cingulate_gyrus)_left
