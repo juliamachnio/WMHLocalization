@@ -30,17 +30,28 @@ exclusively to the extracted WM regions from FAST-AID (see [matlab code (https:/
 
 ## Lesions and regions segmentation
 
-We trained four deep learning architectures: U-Net, UNETR, MultiResUNet and MedNeXt, to segment both WM lesions and anatomical WM regions, and combined the results to determine the location of WM lesions. We treated FLAIR and T1 images as a single modality to increase the number of training samples, improve robustness to intensity and modality variations, and enhance the model's generalizability in cases of missing data modalities. To further increase model robustness, we applied multiple augmentation techniques \cite{llambias2023data}, including additive and multiplicative noise, bias field addition, rotation, elastic deformation, and motion artifact simulation. Additionally, we used a weighted combination of cross-entropy (CE) loss, Dice-Sørensen (DS) loss, and skeleton recall (SR) loss, which has proven effective for segmenting thin, tubular structures and lesions \cite{kirchhoff2024skeleton}. 
+We trained four deep learning architectures: U-Net, UNETR, MultiResUNet and MedNeXt, to segment both WM lesions and anatomical WM regions, and combined the results to determine the location of WM lesions. We treated FLAIR and T1 images as a single modality to increase the number of training samples, improve robustness to intensity and modality variations, and enhance the model's generalizability in cases of missing data modalities. We applied multiple augmentation techniques including additive and multiplicative noise, bias field addition, rotation, elastic deformation, and motion artifact simulation. We used a weighted combination of cross-entropy (CE) loss, Dice-Sørensen (DS) loss, and skeleton recall (SR) loss, which has proven effective for segmenting thin, tubular structures and lesions \cite{kirchhoff2024skeleton}. 
 
-Each DL architecture was trained using [Yucca](https://github.com/Sllambias/yucca/tree/main). 
+We use [Yucca](https://github.com/Sllambias/yucca/tree/main) to preprocess and train deep learning models. Example code for lesion and region segmentation:
 
 WM Lesions segmentation
 ```bash
 yucca_preprocess -t Task001_WM_Lesion
+yucca_train -t Task001_WM_Lesion -d 2D -m UNet
+yucca_inference -t Task002_WM_Lesion_T1 -s Task004_WM_Lesion -d 2D -m UNet --save_softmax
+yucca_inference -t Task003_WM_Lesion_FLAIR -s Task004_WM_Lesion -d 2D -m UNet --save_softmax
+yucca_ensemble --in_dirs /results/Task002_WM_Lesion_T1/Task001_WM_Lesion/UNet__2D/YuccaManager__YuccaPlanner/default/kfold_5_fold_0/version_0/best /results/Task003_WM_Lesion_FLAIR/Task001_WM_Lesion/UNet__2D/YuccaManager__YuccaPlanner/default/kfold_5_fold_0/version_0/best --out_dir /results/Task001_WM_Lesion/Ensemble/2D_UNet
+yucca_evaluation --pred /data/results/Task001_WM_Lesion/Ensemble/2D_UNet --gt /data/raw_data/Task004_WM_Location/labelsTs -c 0 1 2
+
 ```
 WM Regions segmentation
 ```bash
-yucca_preprocess -t Task3002_WM_Location
+yucca_preprocess -t Task004_WM_Location
+yucca_train -t Task004_WM_Location -d 3D -m MultiResUNet -man YuccaManager_SkeletonLoss
+yucca_inference -t Task005_WM_Location_T1 -s Task004_WM_Location -d 3D -m MultiResUNet -man YuccaManager_SkeletonLoss --save_softmax
+yucca_inference -t Task006_WM_Location_FLAIR -s Task004_WM_Location -d 3D -m MultiResUNet -man YuccaManager_SkeletonLoss --save_softmax
+yucca_ensemble --in_dirs /results/Task005_WM_Location_T1/Task004_WM_Location/MultiResUNet__3D/YuccaManager_SkeletonLoss__YuccaPlanner/default/kfold_5_fold_0/version_0/best /results/Task006_WM_Location_FLAIR/Task004_WM_Location/MultiResUNet__3D/YuccaManager_SkeletonLoss__YuccaPlanner/default/kfold_5_fold_0/version_0/best --out_dir /results/Task004_WM_Location/Ensemble/3D_MultiResUNet
+yucca_evaluation --pred /data/results/Task004_WM_Location/Ensemble/3D_MultiResUNet --gt /data/raw_data/Task004_WM_Location/labelsTs -c 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36
 ```
 
 ## Citation
@@ -54,3 +65,4 @@ year={2024},
 url={https://openreview.net/forum?id=ea0YJaJShO}
 }
 ```
+## References 
