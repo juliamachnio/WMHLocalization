@@ -27,7 +27,7 @@ singularity run --nv fast_aid_brain.sif /input-dir-of-T1-img/ /output-dir/ 16 gp
 The extracted WM from T1 atlas was registered to extracted WM from each subject's T1 image to estimate the affine transform. This transform is then applied to register the refined WM atlas labels to the subject's space, generating individual labels. We used a [multimodal intensity-based automatic image registration algorithm](https://se.mathworks.com/help/images/intensity-based-automatic-image-registration.html), applied
 exclusively to the extracted WM regions from FAST-AID (see [matlab code](https://github.com/juliamachnio/WMHLocalization/blob/main/Create_WM_labels.m)).
 
-
+The registered refined WM atlas labels are provided in [WMH_refined_labels](https://github.com/juliamachnio/WMHLocalization/tree/main/WMH_refined_labels) folder which contains Train and Test splits. The files are named WMH_{n} where n is the subject number form original dataset. 
 
 
 ## Lesions and regions segmentation
